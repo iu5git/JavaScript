@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      const method = 'friends.get'
+      const userId = '162562714'
+      const token = '7cba29347cba29347cba29348c7cc10a0877cba7cba29341d4626628dc34b3b427a22a4'
+      const version = '5.131'
+      const fields = '*'
+      const data = $.getJSON(
+        `https://api.vk.com/method/${method}?user_id=${userId}&access_token=${token}&v=${version}&fields=${fields}`,
+        (data) => {
+
+          console.log('Out data is: ', data);
+        }
+      )
+
+
+      const auth = document.querySelectorAll('.auth')[0]
+      const button = document.createElement('button')
+      const authLink = document.createElement('a')
+      button.innerText = 'VK AUTH'
+      authLink.href =
+        `https://oauth.vk.com/authorize?` +
+        `client_id=8069948` +
+        `&display=popup` +
+        `&redirect_uri=https://oauth.vk.com/blank.html` +
+        `&scope=friends` +
+        `&response_type=token` +
+        `&v=5.131&state=123456`
+
+      authLink.appendChild(button)
+      auth.appendChild(authLink)
+
+      // https://oauth.vk.com/blank.html#access_token=34aa62747ffbaf6fb53238b75798cfc8564120ed005d44b970cdb4ef84d5b9c55478b2519585659382dc5&expires_in=86400&user_id=162562714&state=123456
+    });
+  </script>
+</head>
+
+<body>
+  <div class="auth"></div>
+
+</body>
+
+</html>

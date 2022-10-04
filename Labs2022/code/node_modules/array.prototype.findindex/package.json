@@ -1,0 +1,40 @@
+{
+	"name": "array.prototype.findindex",
+	"version": "2.1.0",
+	"description": "Array.prototype.findIndex ES2015 polyfill.",
+	"keywords": [
+		"Array.prototype.findIndex",
+		"findIndex",
+		"es6",
+		"es2015"
+	],
+	"main": "index.js",
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"tests-only": "es-shim-api --bound && mocha test",
+		"test": "npm run tests-only",
+		"posttest": "npx aud --production"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/paulmillr/Array.prototype.findIndex.git"
+	},
+	"author": "Paul Miller <http://paulmillr.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/paulmillr/Array.prototype.findIndex/issues"
+	},
+	"devDependencies": {
+		"@es-shims/api": "^2.1.2",
+		"@ljharb/eslint-config": "^16.0.0",
+		"aud": "^1.0.0",
+		"chai": "^3.5.0",
+		"eslint": "^6.8.0",
+		"mocha": "^2.4.5"
+	},
+	"dependencies": {
+		"define-properties": "^1.1.3",
+		"es-abstract": "^1.17.4"
+	}
+}

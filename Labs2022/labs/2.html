@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+
+    let xhr = new XMLHttpRequest();
+    // 2. Конфигурируем его: GET-запрос на URL 'phones.xml'
+    xhr.open('GET', 'https://www.w3schools.com/xml/cd_catalog.xml', false);
+    // 3. Отсылаем запрос
+    xhr.send();
+
+
+    // 4. Если код ответа сервера не 200, то это ошибка
+    if (xhr.status != 200) {
+      // обработать ошибку
+      console.log(xhr.status + ': ' + xhr.statusText);   // пример вывода: 404: Not Found
+    } else {
+      // вывести результат
+      console.log(xhr.responseXML);   // responseText -- текст ответа.
+      // el = document.getElementById('age-table');
+      document.querySelector('body').innerHTML(xhr.responseXML)
+    }
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

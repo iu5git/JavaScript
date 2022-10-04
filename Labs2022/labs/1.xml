@@ -1,0 +1,41 @@
+<?pcml version="1.0" encoding="utf-8"?>
+<!DOCTYPE recipe>
+<recipe>
+  <head>
+    <title>Сладкий хлеб</title>
+    <preptime>120 минут</preptime>
+    <cooktime>120 минут</cooktime>
+    <level>80</level>
+  </head>
+  <composition>
+    <ingredient amount="3" unit="стакан">Мука</ingredient>
+    <ingredient amount="0.25" unit="грамм">Дрожжи</ingredient>
+    <ingredient amount="1.5" unit="стакан">Тёплая вода</ingredient>
+    <ingredient amount="1" unit="стакан">Молоко</ingredient>
+  </composition>
+</recipe>
+<recipe>
+  <head>
+    <title>Яичница</title>
+    <preptime>1 минута</preptime>
+    <cooktime>10 минут</cooktime>
+    <level>5</level>
+  </head>
+  <composition>
+    <ingredient amount="2" unit="штука">Яйцо</ingredient>
+    <ingredient amount="0.25" unit="грамм">Соль</ingredient>
+  </composition>
+</recipe>
+<recipe>
+  <head>
+    <title>бутерброд</title>
+    <preptime>1 минута</preptime>
+    <cooktime>1 минута</cooktime>
+    <level>1</level>
+  </head>
+  <composition>
+    <ingredient amount="1" unit="штука">Хлеб</ingredient>
+    <ingredient amount="1" unit="штука">Масло</ingredient>
+    <ingredient amount="1" unit="штука">Сыр</ingredient>
+  </composition>
+</recipe>
