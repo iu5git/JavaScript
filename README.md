@@ -43,13 +43,13 @@ HTTP/2, Polling, WebSocket
 
 Создание калькулятора: верстка на HTML, CSS. LiveServer. Добавить кнопки по варианту.
 
-* [Методические указания](/tutorials/calculator/Calculator-JS.md)
+* [Методические указания ](/tutorials/calculator/Calculator-JS.md)
 
 #### Лабораторная работа 2.
 
 Создание калькулятора: функции на JS. По вариантам реализовать различные функции калькулятора: log, sin, накопление итога и тд
 
-* [Методические указания](/tutorials/calculator/Calculator_part2.md)
+* [Методические указания ](/tutorials/calculator/Calculator_part2.md)
 
 #### Лабораторная работа 3.
 Создание проекта через npm, сервер express. Верстка интерфейса с карточками, данные через mock объекты. 
