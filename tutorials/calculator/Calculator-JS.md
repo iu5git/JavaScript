@@ -122,9 +122,17 @@ HTML - это язык разметки, с помощью которого оп
 
 HTML-элементов существует большое количество, мы рассмотрели лишь небольшую часть. Почитать про другие HTML-тэги, чтобы научиться вставлять изображения, таблицы, поля ввода, формы и прочее можно [здесь](https://www.w3schools.com/html/default.asp).
 
+## Создание проекта
+
+Для данной лабораторной работы будем использовать [VS Code](https://code.visualstudio.com). 
+	
+* Заходим в меню создания проекта и выбираем: **Создать файл**
+* Создайте HTML-файл: **calculator.html**
+
+
 ## Верстка калькулятора
 
-Создайте HTML-файл со следующим содержимым. Здесь определёны все составляющие калькулятора (кнопки и поле вывода результата вычислений). Для каждого активного элемента определен атрибут `id` ( уникальный идентификатор), он потребуется в дальнейшем, чтобы обращаться к элементам из JavaScript.
+В HTML-файл поместите следующее содержимое. Здесь определёны все составляющие калькулятора (кнопки и поле вывода результата вычислений). Для каждого активного элемента определен атрибут `id` ( уникальный идентификатор), он потребуется в дальнейшем, чтобы обращаться к элементам из JavaScript.
 
 ```html
 <!DOCTYPE html>
@@ -146,37 +154,37 @@ HTML-элементов существует большое количество
     <div>
 	<!--горизонтальный ряд из четырех кнопок-->
 	<div>  
-	      <button id="btn_cancel">C</button>    <!-- про тэг кнопки: https://www.w3schools.com/tags/tag_button.asp -->
-	      <button id="btn_sign">+/-</button>
-	      <button id="btn_percent">%</button>
-	      <button id="btn_div">/</button>
+	      <button id="btn_op_clear">C</button>    <!-- про тэг кнопки: https://www.w3schools.com/tags/tag_button.asp -->
+	      <button id="btn_op_sign">+/-</button>
+	      <button id="btn_op_percent">%</button>
+	      <button id="btn_op_div">/</button>
 	</div>
 
 	<div>
-	      <button id="btn_7">7</button>
-	      <button id="btn_8">8</button>
-	      <button id="btn_9">9</button>
-	      <button id="btn_mult">x</button>
+	      <button id="btn_digit_7">7</button>
+	      <button id="btn_digit_8">8</button>
+	      <button id="btn_digit_9">9</button>
+	      <button id="btn_op_mult">x</button>
 	</div>	
 
 	<div>
-	      <button id="btn_4">4</button>
-	      <button id="btn_5">5</button>
-	      <button id="btn_6">6</button>
-	      <button id="btn_minus">-</button>
+	      <button id="btn_digit_4">4</button>
+	      <button id="btn_digit_5">5</button>
+	      <button id="btn_digit_6">6</button>
+	      <button id="btn_op_minus">-</button>
 	</div>	
 
 	<div>
-	      <button id="btn_1">1</button>
-	      <button id="btn_2">2</button>
-	      <button id="btn_3">3</button>
-	      <button id="btn_plus">+</button>
+	      <button id="btn_digit_1">1</button>
+	      <button id="btn_digit_2">2</button>
+	      <button id="btn_digit_3">3</button>
+	      <button id="btn_op_plus">+</button>
 	</div>
 
 	<div>
-	      <button id="btn_0">0</button>
-	      <button id="btn_dot">.</button>
-	      <button id="btn_equal">=</button>
+	      <button id="btn_digit_0">0</button>
+	      <button id="btn_digit_dot">.</button>
+	      <button id="btn_op_equal">=</button>
 	</div>
     </div>
   
@@ -398,13 +406,13 @@ p.my-large-italic {
 
 Теперь заполним атрибут `class` у HTML-элементов калькулятора, чтобы применить к ним созданные стили:
 
-1. Кнопки циферблата: 0-9 относятся к классу `my-btn`:
+1. Кнопки циферблата: 0-9 и точка относятся к классу `my-btn`:
     
     ```html
     ...
-    <button id="btn_7" class="my-btn">7</button>
-    <button id="btn_8" class="my-btn">8</button>
-    <button id="btn_9" class="my-btn">9</button>
+    <button id="btn_digit_7" class="my-btn">7</button>
+    <button id="btn_digit_8" class="my-btn">8</button>
+    <button id="btn_digit_9" class="my-btn">9</button>
     ...
     ```
     
@@ -412,26 +420,26 @@ p.my-large-italic {
     
     ```html
     ...
-    <button id="btn_cancel" class="my-btn secondary">C</button>
-    <button id="btn_sign" class="my-btn secondary">+/-</button>
-    <button id="btn_percent" class="my-btn secondary">%</button>
+    <button id="btn_op_clear" class="my-btn secondary">C</button>
+    <button id="btn_op_sign" class="my-btn secondary">+/-</button>
+    <button id="btn_op_percent" class="my-btn secondary">%</button>
     ...
     ```
     
 3. Кнопки первостепенных операций принадлежат к классам `my-btn` и `primary`:
     
     ```html
-    <button id="btn_mult" class="my-btn primary">x</button>
+    <button id="btn_op_mult" class="my-btn primary">x</button>
     ...
-    <button id="btn_minus" class="my-btn primary">-</button>
+    <button id="btn_op_minus" class="my-btn primary">-</button>
     ...
-    <button id="btn_plus" class="my-btn primary">+</button>
+    <button id="btn_op_plus" class="my-btn primary">+</button>
     ```
     
 4. Кнопка “=” дополнительно относится еще и к классу `execute`:
     
     ```html
-    <button id="btn_equal" class="my-btn primary execute">=</button>
+    <button id="btn_op_equal" class="my-btn primary execute">=</button>
     ```
     
 5. Блок с экраном калькулятора относим к классу `result`:
