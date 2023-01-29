@@ -32,6 +32,7 @@ Event Loop, промисы, async/await, fetch
 * **Лекция 6. Бэкенд на JavaScript** 
 
 Node.js. Бэкенд на JavaScript
+Кеширование и проксирование на Node.js
 
 * **Лекция 7. Web реального времени**
 
