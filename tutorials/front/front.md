@@ -798,16 +798,28 @@ render() {
 
 ## Задание
 
-Что нужно будет сделать в задании?
+Создать двухстраничное приложение из примера по вариантам.
+Вариант состоит из темы и компонента, который необходимо использовать.
+Все данные должны соответствовать вашей теме.
+Компонент можно применить по своему усмотрению.
+
+Варианты:
+
+* Тема - собаки, Компонент - [аккордеон](https://bootstrap-4.ru/docs/5.2/components/accordion/).
+* Тема - кошки, Компонент - [уведомления](https://bootstrap-4.ru/docs/5.2/components/alerts/).
+* Тема - продукты, Компонент - [значки](https://bootstrap-4.ru/docs/5.2/components/badge/).
+* Тема - учебные предметы, Компонент - [карусель](https://bootstrap-4.ru/docs/5.2/components/carousel/).
+* Тема - дизайн, Компонент - [информер](https://bootstrap-4.ru/docs/5.2/components/popovers/).
+* Тема - финансы, Компонент - [всплывающие сообщения](https://bootstrap-4.ru/docs/5.2/components/toasts/).
+* Тема - фотографии, Компонент - [группа кнопок](https://bootstrap-4.ru/docs/5.2/components/button-group/).
 
 ## Полезные ссылки
 
-1. Проект, который мы сделали в данном руководстве [тут][lab3-example]
-2. Почитать про **document** [тут][document]
-3. Почитать про **getElementById** [тут][getElementById]
-4. Почитать про **insertAdjacentHTML** [тут][insertAdjacentHTML]
-5. Почитать про **event** [тут][event]
-6. Почитать про **addEventListener** [тут][addEventListener]
+1. Почитать про **document** [тут][document]
+2. Почитать про **getElementById** [тут][getElementById]
+3. Почитать про **insertAdjacentHTML** [тут][insertAdjacentHTML]
+4. Почитать про **event** [тут][event]
+5. Почитать про **addEventListener** [тут][addEventListener]
 
 [v8]: https://v8.dev
 [node]: https://nodejs.org
@@ -824,7 +836,6 @@ render() {
 [bootstrap]: https://bootstrap-4.ru
 [bootstrap-npm]: https://www.npmjs.com/package/bootstrap
 [bootstrap-card]: https://bootstrap-4.ru/docs/5.2/components/card
-[lab3-example]: ./example
 [document]: https://developer.mozilla.org/ru/docs/Web/API/Document
 [getElementById]: https://developer.mozilla.org/ru/docs/Web/API/Document/getElementById
 [insertAdjacentHTML]: https://developer.mozilla.org/ru/docs/Web/API/Element/insertAdjacentHTML
