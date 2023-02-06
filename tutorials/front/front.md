@@ -1,11 +1,11 @@
-# ЛР 3. Простое веб-приложение
+# ЛР 3. Простое веб-приложение. Верстка
 
-**Цель** данной лабораторной работы - знакомство с node, npm. Верстка пользовательского интерфейса, получение данных на моках. В ходе выполнения работа, вам предстоит ознакомиться с кодом реализации простого интерфейса и вывода данных, и затем выполнить задания по варианту.
+**Цель** данной лабораторной работы - знакомство с node, npm, написание простого приложения на JavaScript. В ходе выполнения работы, вам предстоит ознакомиться с кодом реализации простого интерфейса и вывода данных, и затем выполнить задания по варианту.
 
 ## План
 
-1. Что такое node, npm и package.json
-2. Инструменты для работы
+1. Инструменты для работы
+2. Что такое node, npm и package.json
 3. Как работать с html в JS
 4. Инициализация проекта
 5. Создание главной страницы, подключение bootstrap
@@ -14,7 +14,13 @@
 8. Верстка главной страницы
 9. Верстка страницы продукта
 
-## 1. Что такое node, npm и package.json
+## 1. Инструменты для работы
+
+Для работы будем использовать инструменты из предыдущих лабораторной работы: [VS Code][vs-code] + [Live Server][vs-code-live-server].
+
+**Перед началом работы необходимо установить на свой компьютер [Node.js][node-install].**
+
+## 2. Что такое node, npm и package.json
 
 ### Node.js
 
@@ -30,23 +36,11 @@
 
 [Package-lock.json][package-lock.json] - это файл, который хранит дерево зависимостей. Библиотеки, которые мы устанавливаем, могут иметь вложенные зависимости и этот файл хранит полное дерево.
 
-## 2. Инструменты для работы
-
-Для написания своего приложения нам нужен текстовый редактор. Можно воспользоваться обычным блокнотом, но это не так удобно. Есть 2 инструмента, которые можно использовать при разработке приложения.
-
-* [VS Code][vs-code] - простой текстовый редактор от Microsoft. Он бесплатный, В нем есть необходимый минимум, а все остальное можно расширить с помощью плагинов.
-
-* [WebStorm][webstorm] - продвинутый редактор от JetBrains. Он платный, но есть бесплатная подписка для студентов. В этот мощный редактор уже встроен весь необходимый функционал, а если чего-то не хватает, то можно установить плагины.
-
-В этой лабораторной работе мы будем использовать VS Code и расширение [Live Server][vs-code-live-server], которое вы использовали в предыдущих лабораторных работах.
-
 ## 3. Как работать с html в JS
 
 В прошлых лабораторных работах мы уже работали с HTML версткой из нашего JavaScript кода, для этого у нас есть общирное API по работе с [DOM деревом][dom-api]. Сегодня мы будем использовать **getElementById** и **insertAdjacentHTML**, но функций намного больше.
 
 ## 4. Инициализация проекта
-
-Перед началом работы необходимо установить на свой компьютер [Node.js][node-install].
 
 * Создаем пустую папку и открываем ее в VS Code.
 * Инициализируем проект в npm с помощью команды `npm init`.
@@ -89,7 +83,7 @@
 
 Если мы откроем html файл, то увидим страницу с надписью **Hello world!**.
 
-![Фото 1](./assets/photos/photo1.png)
+![Фото 1](./assets/front/photos/photo1.png)
 
 Для того, чтобы было удобнее работать мы можем воспользоваться расширением Live Server, для этого открываем файл `index.html` и нажимаем `Go Live` в правом нижнем углу.
 
@@ -119,7 +113,7 @@
 </html>
 ```
 
-![Фото 2](./assets/photos/photo2.png)
+![Фото 2](./assets/front/photos/photo2.png)
 
 Как мы видим наша кнопка видна, значит мы все подключили успешно и можно переходить к написанию JavaScript кода.
 
@@ -194,7 +188,7 @@ const root = document.getElementById('root');
 root.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-primary">Hello world 2!</button>')
 ```
 
-![Фото 3](./assets/photos/photo3.png)
+![Фото 3](./assets/front/photos/photo3.png)
 
 Как мы видим наша кнопка появилась на экране, значит мы правильно написали на JavaScript файл. Теперь попробуем написать что-то посложнее.
 
@@ -307,7 +301,7 @@ const mainPage = new MainPage(root);
 mainPage.render();
 ```
 
-![Фото 4](./assets/photos/photo4.png)
+![Фото 4](./assets/front/photos/photo4.png)
 
 Все работает, кнопка видна на странице. Мы сказали, что у нас страница должна состоять из мелки компонентов, а сейчас верстка кнопки происходит на странице. Вынесем в компонент и добавим ее на странице.
 
@@ -338,7 +332,7 @@ render() {
 }
 ```
 
-![Фото 5](./assets/photos/photo5.png)
+![Фото 5](./assets/front/photos/photo5.png)
 
 Все работает, кнопка видна на странице. Теперь сделаем нашу страницу такой, чтобы она была готова к нашим данным.
 
@@ -414,7 +408,7 @@ render() {
 }
 ```
 
-![Фото 6](./assets/photos/photo6.png)
+![Фото 6](./assets/front/photos/photo6.png)
 
 Отлично, у нас отображается карточка. Сейчас у нас данные захардкожены в компонент, а нам бы хотелось прокидывать данные в компонент.
 
@@ -463,7 +457,7 @@ render() {
 }
 ```
 
-![Фото 7](./assets/photos/photo7.png)
+![Фото 7](./assets/front/photos/photo7.png)
 
 Отлично, данные отображаются. Теперт нам хотелось бы отрисовать больше чем один компонент. У нас может приходить список данных, для отрисовки в карточках, а сейчам мы умеем рисовать только одну карточку. Для этого нам нужно добавить родительски элемент на главной странице. В этот элемент мы будем добавлять все наши компоненты.
 
@@ -534,7 +528,7 @@ render() {
 }
 ```
 
-![Фото 8](./assets/photos/photo8.png)
+![Фото 8](./assets/front/photos/photo8.png)
 
 Мы смогли отрисовать сразу несколько компонентов, но если мы попробуем нажать на кнопку, то ничего не произойдет. Добавим обработчики нажатия на кнопку. Для того, чтобы нам это сделать нужно внутри компонента подписаться на собитие клик по кнопке и обработать вызов этой функции. Функция, которая будет срабатывать по клику будем прокидывать в компонент из страницы.
 
@@ -708,7 +702,7 @@ clickCard(e) {
 }
 ```
 
-![Фото 9](./assets/photos/photo9.png)
+![Фото 9](./assets/front/photos/photo9.png)
 
 Все работает. При нажатии на кнопку в карточке на главной странице у нас открывается страница продукта. Для удобства добавим кнопку, которая будет возвращать на главную страницу.
 
@@ -769,7 +763,7 @@ render() {
 }
 ```
 
-![Фото 10](./assets/photos/photo10.png)
+![Фото 10](./assets/front/photos/photo10.png)
 
 Все работает, если нажать на кнопку, то мы вернемся обратно на главную страницу. На этом лабораторная работа закончилась.
 
@@ -798,17 +792,31 @@ render() {
 
 ## Задание
 
-Что нужно будет сделать в задании?
+Создать двухстраничное приложение из примера по вариантам.
+Вариант состоит из темы и компонента, который необходимо использовать.
+Все данные должны соответствовать вашей теме.
+Компонент можно применить по своему усмотрению.
+
+Варианты:
+
+1. Тема - собаки, Компонент - [аккордеон](https://bootstrap-4.ru/docs/5.2/components/accordion/).
+2. Тема - кошки, Компонент - [уведомления](https://bootstrap-4.ru/docs/5.2/components/alerts/).
+3. Тема - продукты, Компонент - [значки](https://bootstrap-4.ru/docs/5.2/components/badge/).
+4. Тема - учебные предметы, Компонент - [карусель](https://bootstrap-4.ru/docs/5.2/components/carousel/).
+5. Тема - дизайн, Компонент - [информер](https://bootstrap-4.ru/docs/5.2/components/popovers/).
+6. Тема - финансы, Компонент - [всплывающие сообщения](https://bootstrap-4.ru/docs/5.2/components/toasts/).
+7. Тема - фотографии, Компонент - [группа кнопок](https://bootstrap-4.ru/docs/5.2/components/button-group/).
 
 ## Полезные ссылки
 
-1. Проект, который мы сделали в данном руководстве [тут][lab3-example]
-2. Почитать про **document** [тут][document]
-3. Почитать про **getElementById** [тут][getElementById]
-4. Почитать про **insertAdjacentHTML** [тут][insertAdjacentHTML]
-5. Почитать про **event** [тут][event]
-6. Почитать про **addEventListener** [тут][addEventListener]
+1. Почитать про **document** [тут][document]
+2. Почитать про **getElementById** [тут][getElementById]
+3. Почитать про **insertAdjacentHTML** [тут][insertAdjacentHTML]
+4. Почитать про **event** [тут][event]
+5. Почитать про **addEventListener** [тут][addEventListener]
 
+[vs-code]: https://code.visualstudio.com
+[vs-code-live-server]: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
 [v8]: https://v8.dev
 [node]: https://nodejs.org
 [node-install]: https://nodejs.org/en/download
@@ -816,15 +824,11 @@ render() {
 [package.json]: https://docs.npmjs.com/cli/v9/configuring-npmpackage-json
 [package-lock.json]: https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json
 [dom-api]: https://learn.javascript.ru/dom-nodes
-[vs-code]: https://code.visualstudio.com
-[vs-code-live-server]: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
-[webstorm]: https://www.jetbrains.com/ru-ru/webstorm
 [about-gitignore]: https://tyapk.ru/blog/post/gitignore
-[gitignore]: ./assets/.gitignore
+[gitignore]: ./assets/front/.gitignore
 [bootstrap]: https://bootstrap-4.ru
 [bootstrap-npm]: https://www.npmjs.com/package/bootstrap
 [bootstrap-card]: https://bootstrap-4.ru/docs/5.2/components/card
-[lab3-example]: ./example
 [document]: https://developer.mozilla.org/ru/docs/Web/API/Document
 [getElementById]: https://developer.mozilla.org/ru/docs/Web/API/Document/getElementById
 [insertAdjacentHTML]: https://developer.mozilla.org/ru/docs/Web/API/Element/insertAdjacentHTML
