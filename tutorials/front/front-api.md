@@ -352,11 +352,8 @@ getHTML(data) {
 
 ## Полезные ссылки
 
-1. Почитать про **document** [тут][document]
-2. Почитать про **getElementById** [тут][getElementById]
-3. Почитать про **insertAdjacentHTML** [тут][insertAdjacentHTML]
-4. Почитать про **event** [тут][event]
-5. Почитать про **addEventListener** [тут][addEventListener]
+1. Почитать про **XMLHttpRequest** [тут][xml]
+2. Почитать про **VK Api** [тут][vk-api]
 
 [vs-code]: https://code.visualstudio.com
 [vs-code-live-server]: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
