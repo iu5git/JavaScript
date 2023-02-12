@@ -565,7 +565,7 @@ clickCard(e) {
     const cardId = e.target.dataset.id
 }
 
-const productCard = new ProductCardComponent(this.page)
+const productCard = new ProductCardComponent(this.pageRoot)
 productCard.render(item, this.clickCard.bind(this))
 ```
 
@@ -758,7 +758,7 @@ render() {
     backButton.render(this.clickBack.bind(this))
 
     const data = this.getData()
-    const stock = new StockComponent(this.pageRoot)
+    const stock = new ProductComponent(this.pageRoot)
     stock.render(data)
 }
 ```
