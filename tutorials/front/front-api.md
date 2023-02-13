@@ -193,7 +193,7 @@ import {groupId} from "../../modules/consts.js";
 
 getData() {
     ajax.post(urls.getGroupMembers(groupId), (data) => {
-        this.renderGroupMembers(data.response.items)
+        this.renderData(data.response.items)
     })
 }
 ```
