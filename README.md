@@ -1,15 +1,16 @@
 # JavaScript
 
-Репозиторий курса Проектирование Сетевых Приложений
+Репозиторий курса "Проектирование Сетевых Приложений"
 
-#### Образ виртуальной машины Linux [Ubuntu 20.04](https://github.com/iu5git/Standards/blob/main/Linux/Linux.md) для выполнения заданий курса
+**Образ виртуальной машины Linux [Ubuntu 20.04](https://github.com/iu5git/Standards/blob/main/Linux/Linux.md) для выполнения заданий курса**
+
 [Материалы](Labs2022) курса 2022 года
 
 ## Лекции
 
 ### Лекция 1. Введение в Web
 
-Основы Web: HTML, URI, кратко HTTP. CSS, кратко JavaScript
+Основы Web: HTML, URI, HTTP, CSS, кратко JavaScript
 
 * [Презентация](/lectures/lec1.pdf)
 
