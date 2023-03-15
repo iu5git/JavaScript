@@ -2,31 +2,31 @@
 
 Репозиторий курса "Проектирование Сетевых Приложений"
 
-**Образ виртуальной машины Linux [Ubuntu 20.04](https://github.com/iu5git/Standards/blob/main/Linux/Linux.md) для выполнения заданий курса**
-
 [Материалы](Labs2022) курса 2022 года
 
 ## Лекции
 
 ### Лекция 1. Введение в Web
 
-Основы Web: HTML, URI, HTTP, CSS, кратко JavaScript
+Основы Web: URI, Document, HTTP, HTML, CSS, Кратко JavaScript
 
 * [Презентация](/lectures/lec1.pdf)
 
 ### Лекция 2. Основы JavaScript
 
-Основы JavaScript: типы, операторы, функции, коллекции, классы, DOM
+Основы JavaScript: типы, операторы, функции, объекты, коллекции, классы, DOM
 
 * [Презентация](/lectures/lec2.pdf)
 
-### Лекция 3. Модель клиент-сервер
+### Лекция 3. Углубленный JavaScript
 
-npm, HTTP, модель клиент-сервер, кратко express
+Углубленный JavaScript: замыкания, контекст, прототипы, наследования, модули, обработка ошибок, события
 
-### Лекция 4. Запросы AJAX
+* [Презентация](/lectures/lec3.pdf)
 
-AJAX. JSON/XML, XmlHttpRequest, Cors
+### Лекция 4. Модель клиент-сервер
+
+Npm, модель клиент-сервер, HTTP, Ajax, JSON/XML, XHR, Cors
 
 ### Лекция 5. Асинхронный JavaScript
 
@@ -46,25 +46,27 @@ HTTP/2, Polling, WebSocket
 
 #### Лабораторная работа 1
 
-Создание калькулятора: верстка на HTML, CSS. LiveServer. Добавить кнопки по варианту.
+Создание калькулятора. Верстка на HTML, CSS.
 
-* [Методические указания](/tutorials/calculator/HTML.md)
+* [Методические указания](/tutorials/lab1/README.md)
 
 #### Лабораторная работа 2
 
-Создание калькулятора: функции на JS. По вариантам реализовать различные функции калькулятора: log, sin, накопление итога и тд
+Создание калькулятора. Функции на JavaScript.
 
-* [Методические указания](/tutorials/calculator/JS.md)
+* [Методические указания](/tutorials/lab2/README.md)
 
 #### Лабораторная работа 3
 
 Знакомство с node, npm. Верстка интерфейса с карточками, данные через mock объекты.
 
-* [Методические указания](/tutorials/front/front.md)
+* [Методические указания](/tutorials/lab3/README.md)
 
 #### Домашнее задание
 
-* [Задания на знание JavaScript](/tutorials/homework/homework.md): работа с коллекциями, функциями, классами
+Работа с коллекциями, функциями, классами.
+
+* [Методические указания](/tutorials/hw1/README.md)
 
 #### Рубежный контроль 1
 
@@ -72,19 +74,21 @@ HTTP/2, Polling, WebSocket
 
 #### Лабораторная работа 4
 
-Продолжение Лабораторной работы 3: подключение к стороннему API (VK?), Cors. Запросы XHR
+Продолжение Лабораторной работы 3. Подключение к стороннему API (VK), Cors. Запросы XHR.
 
-* [Методические указания](/tutorials/front/front-api.md)
+* [Методические указания](/tutorials/lab4/README.md)
 
 #### Лабораторная работа 5
 
-Продолжение Лабораторной работы 4: замена коллбеков на промисы и/или await. Запросы fetch
+Продолжение Лабораторной работы 4. Замена коллбеков на промисы и/или await. Запросы fetch.
+
+* [Методические указания](/tutorials/lab5/README.md)
 
 #### Лабораторная работа 6
 
 Реализация собственного API на Node.js, подключение к интерфейсу.
 
-* [Методические указания](/tutorials/lab6)
+* [Методические указания](/tutorials/lab6/README.md)
 
 #### Дополнительное задание
 
@@ -94,10 +98,12 @@ HTTP/2, Polling, WebSocket
 
 ## Требуемое ПО
 
-1. node.js
-2. npm
-3. VS Code + JS plugins и тд
-4. LiveServer
+**Образ виртуальной машины Linux [Ubuntu 20.04](https://github.com/iu5git/Standards/blob/main/Linux/Linux.md) для выполнения заданий курса**
+
+1. [Node JS](https://nodejs.org)
+2. [npm](https://www.npmjs.com)
+3. [VS Code](https://code.visualstudio.com)
+4. [VS Code LiveServer](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 
 ## Команда курса выражает благодарность за помощь в подготовке данного курса
 
