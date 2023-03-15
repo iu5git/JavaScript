@@ -316,7 +316,7 @@ getHTML(data) {
 
 Главная страница - [groups.getMembers](https://dev.vk.com/method/groups.getMembers).
 Получаем список пользователей группы и отображаем их.
-Необходимо сделать компонент для фильтра `sort`.
+Необходимо сделать компонент для фильтра `sort` (см. groups.getMembers -> Параметры -> sort).
 
 Вторая страница - [users.get](https://dev.vk.com/method/users.get).
 Отображаем выбранного пользователя на первой странице.
@@ -325,7 +325,7 @@ getHTML(data) {
 
 Главная страница - [groups.getMembers](https://dev.vk.com/method/groups.getMembers).
 Получаем список пользователей группы и отображаем их.
-Необходимо сделать компонент для фильтра `filter`.
+Необходимо сделать компонент для фильтра `filter` (см. groups.getMembers -> Параметры -> filter).
 
 Вторая страница - [users.get](https://dev.vk.com/method/users.get).
 Отображаем выбранного пользователя на первой странице.
@@ -335,7 +335,7 @@ getHTML(data) {
 Главная страница - [messages.getConversationMembers](https://dev.vk.com/method/messages.getConversationMembers).
 Получаем список участников беседы и отображаем их.
 У группы можно создать чат.
-Необходимо сделать несколько чатов у группы и добавить компонент для выбора `peer_id`.
+Необходимо сделать несколько чатов у группы и добавить компонент для выбора `peer_id` (см. messages.getConversationMembers -> Параметры -> peer_id).
 
 Вторая страница - [users.get](https://dev.vk.com/method/users.get).
 Отображаем выбранного пользователя на первой странице.
@@ -345,7 +345,7 @@ getHTML(data) {
 Главная страница - [messages.getConversations](https://dev.vk.com/method/messages.getConversations).
 Получаем список чатов и отображаем их.
 У группы можно создать несколько чатов.
-Необходимо сделать компонент для фильтра `filter`.
+Необходимо сделать компонент для фильтра `filter` (см. messages.getConversations -> Параметры -> filter).
 
 Вторая страница - [messages.getConversationsById](https://dev.vk.com/method/messages.getConversationsById).
 Отображаем выбранный чат на первой странице.
