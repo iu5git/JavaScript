@@ -34,6 +34,8 @@ DNS, браузерный рендеринг, клиент-серверная м
 
 Event Loop, промисы, async/await, fetch
 
+* [Презентация](/lectures/lec5.pdf)
+
 ### Лекция 6. Бэкенд на JavaScript
 
 Node.js. Бэкенд на JavaScript
