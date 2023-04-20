@@ -308,6 +308,8 @@ app.get('/stocks/:id', (req, res) => {
 Весь код представлен ниже:
 
 ```ecmascript 6
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 
 const app = express(); // 1
@@ -317,9 +319,8 @@ const port = 8000;
 
 const readJson = (fileName) => {
     const file = fs.readFileSync(path.join(__dirname, fileName), "utf8");
-    const json = JSON.parse(file);
 
-    return json;
+    return JSON.parse(file);
 };
 
 const storageName = 'stocks.json';
@@ -354,8 +355,307 @@ app.listen(port, host, () => { // 3
 });
 ```
 
+У нас готов полноценный бэкенд на node.js! Но давайте теперь его немного причешем, и добавим в проект структурированности.
+
 ## 6. Добавляем в проект структуру (рефакторим код)
 
-## 7. Добавляем внешний клиент (то самое BFF)
+Основу для всех архитектур бэкенда является разделение на отображение, бизнес логику и работу с данными. В зависимости от различных подходов в архитектуры могут вноситься какие-то различные детали и дополнительные слои, но эти 3 слоя - это база.
 
-## 8. Что еще умеет Node.js
+Давайте разделим нашу сущность акций на четыре слоя: controller (отображение или сетевой слой), service (бизнес-логика), repository (низкоуровневая работа с базой),
+DAO (более высокоуровневая работа с данными из БД).
+
+Создаем папки `internal`, `db`, `modules`. Далее внутри папки `internal` создаем папку `stocks` и внутри нее 4 файла:
+`StocksController.js`, `StocksService.js`, `StocksRespository.js`, `StocksDAO.js` и `index.js`. 
+
+Внутрь modules кладем файл `DBConnector.js` - это базовый класс, умеющий читать и писать в json-файл (нашу импровизированную БД).
+
+В директорию `db` кладем наши json файлы, теперь все они будут лежать там.
+
+Давайте теперь разберем каждый класс по отдельности:
+
+`DBConnector.js`
+```ecmascript 6
+const fs = require('fs');
+const path = require('path');
+
+class DBConnector {
+    constructor(filename) {
+        this.filename = filename;
+    }
+
+    readFile() {
+        return fs.readFileSync(path.join(process.cwd(), 'db', this.filename), "utf8");
+    }
+
+    writeFile(data) {
+        fs.writeFileSync(path.join(process.cwd(), 'db', this.filename), data, "utf8");
+    }
+}
+
+module.exports = {
+     DBConnector,
+};
+```
+
+При создании инстанса класса DBConnector пробрасывает путь до файла. Также доступны 2 метода для чтение содержимого из файла, и записи в него символов.
+
+Далее рассмотрим `StocksRepository.js`:
+
+```ecmascript 6
+const {DBConnector} = require('../../modules/DBConnector');
+
+class StocksRepository {
+    static db = new DBConnector('stocks.json');
+
+    static read() {
+        const file = this.db.readFile();
+
+        return JSON.parse(file);
+    }
+
+    static write(json) {
+        this.db.writeFile(JSON.stringify(json));
+    }
+}
+
+module.exports = {
+    StocksRepository,
+}
+```
+
+StocksRepository - это можно считать статический класс (или singleton). Доступ к его методам и полям есть только у самого класс,
+а не у его инстансов. Здесь мы создаем 1 коннект к нашему файлу `stocks.json` и объявляем методы, которые умеют читать из базы
+и писать в нее в формате json.
+
+Это у нас довольно низкоуровневый слой работы с базой. Он умеет только читать и писать какие-то абстрактные данные в файл `stocks.json`.
+Теперь рассмотрим, как этой сущностью управляют более высокоуровневые элементы архитектуры.
+
+`StocksDAO.js`
+```ecmascript 6
+const {StocksRepository} = require('./StocksRepository');
+
+class StockDAO {
+    constructor(id, src, title, text) {
+        this.id = id;
+        this.src = src;
+        this.title = title;
+        this.text = text;
+    }
+
+    static _validateId(id) {
+        const numberId = Number.parseInt(id);
+        if (Number.isNaN(numberId)) {
+            throw new Error('invalidate id');
+        }
+    }
+
+    static _validate(stock) {
+        if (
+            stock.id === undefined ||
+            stock.src === undefined ||
+            stock.title === undefined ||
+            stock.text === undefined
+        ) {
+            throw new Error('invalidate stock data');
+        }
+
+        this._validateId(stock.id);
+    }
+
+    static find() {
+        const stocks = StocksRepository.read();
+
+        return stocks.map(({id, src, title, text}) => {
+            return new this(id, src, title, text);
+        });
+    }
+
+    static findById(id) {
+        this._validateId(id);
+
+        const stocks = StocksRepository.read();
+        const stock = stocks.find((s) => s.id === id);
+
+        return new this(stock.id, stock.src, stock.title, stock.text);
+    }
+
+    static insert(stock) {
+        this._validate(stock);
+
+        const stocks = StocksRepository.read();
+        StocksRepository.write([...stocks, stock]);
+
+        return new this(stock.id, stock.src, stock.title, stock.text);
+    }
+
+    static delete(id) {
+        this._validateId(id);
+
+        const stocks = StocksRepository.read();
+        const filteredStocks = stocks.filter((s) => s.id !== id);
+
+        StocksRepository.write(filteredStocks);
+
+        return filteredStocks.map(({id, src, title, text}) => {
+            return new this(id, src, title, text);
+        });
+    }
+
+    toJSON() {
+        return {
+            id: this.id,
+            src: this.src,
+            title: this.title,
+            text: this.text,
+        }
+    }
+}
+
+module.exports = {
+    StockDAO,
+}
+```
+
+В отличие от репозитория, тут уже у нас есть осмысленные методы, которые выполняют какие-то четкие действия связанные с сущностью акций.
+Например, добавление новой записи, поиск ее по id, удаление записи по id и тд. 
+
+Наш класс организован таким образом, что его методы привязаны только к самому классу, а поля же привязаны только к его инстансу. 
+Что это значит? А то, что когда мы захотим вызвать какой-то метод, мы сможем это сделать вот так:
+`const stock = StocksDAO.findById(id)`, и т.к. `findById` возвращает самого себя `return new this(stock.id, stock.src, stock.title, stock.text)`,
+то создается инстанс класса `StocksDAO`, который имеет доступ ко всем полям (id, src, title, text), а также методу `toJSON()`. 
+
+Преимущества такого подхода в том, что наш класс умеет не только запрашивать данные, но также хранить их и менеджерить.
+
+Теперь посмотрим как DAO используется в `StocksService.js`:
+
+```ecmascript 6
+const {StockDAO} = require('./StockDAO');
+
+class StocksService {
+    static findStocks(id) {
+        if (id !== undefined) {
+            return StockDAO.findById(id).toJSON();
+        }
+
+        return StockDAO.find().map((stock) => stock.toJSON());
+    }
+
+    static addStock(stock) {
+        return StockDAO.insert(stock).toJSON();
+    }
+
+    static deleteStock(id) {
+        return StockDAO.delete(id).map((stock) => stock.toJSON());
+    }
+}
+
+module.exports = {
+    StocksService,
+}
+```
+
+Класс `StocksService` также является статическим. Он работает напрямую с данными и абсорбирует бизнес-логику более высокого уровня.
+Для данной сущности нет хорошего примера, но это могли бы быть какие-то вычисления, разграничения прав и различная логика обработки данных.
+
+Теперь наконец перейдем к сетевому слою, и рассмотрим файл `StocksController.js`:
+```ecmascript 6
+const {StocksService} = require('./StocksService');
+
+class StocksController {
+    static findStocks(req, res) {
+        try {
+            res.send(StocksService.findStocks());
+        } catch (err) {
+            res.status(400).send({status: 'Bad Request', message: err.message})
+        }
+    }
+
+    static findStockById(req, res) {
+        try {
+            const id = Number.parseInt(req.params.id);
+            res.send(StocksService.findStocks(id))
+        } catch (err) {
+            res.status(400).send({status: 'Bad Request', message: err.message})
+        }
+    }
+
+    static addStock(req, res) {
+        try {
+            res.send(StocksService.addStock(req.body));
+        } catch (err) {
+            res.status(400).send({status: 'Bad Request', message: err.message})
+        }
+    }
+
+    static deleteStock(req, res) {
+        try {
+            const id = Number.parseInt(req.params.id);
+            res.send(StocksService.deleteStock(id));
+        } catch (err) {
+            res.status(400).send({status: 'Bad Request', message: err.message})
+        }
+    }
+}
+
+module.exports = {
+    StocksController,
+};
+```
+
+Класс `StocksController` является статическим. Каждый его метод принимает req и res, для того чтобы принимать запросы, и отдавать на них ответы.
+Данная сущность полностью изолирует на себе работу с сетью, и дальше все методы передаются внутрь `express.router`. 
+Подробнее мы это можем увидеть в файле `index.js` внутри папки `stocks`.
+
+```ecmascript 6
+const express = require('express');
+const {StocksController} = require('./StocksController');
+
+const router = express.Router();
+
+router.get('/', StocksController.findStocks);
+router.get('/:id', StocksController.findStockById);
+router.post('/', StocksController.addStock);
+router.delete('/:id', StocksController.deleteStock);
+
+module.exports = router;
+```
+
+Здесь мы создаем роутер, и назначаем каждый метод нашего контроллера на определенный http-метод и url.
+
+Далее в самом главном файле `index.js` в корне проекта, мы используем этот роутер под общим урлом `/stocks`:
+
+```ecmascript 6
+const express = require('express');
+
+const stocks = require('./internal/stocks');
+
+const app = express();
+
+const host = 'localhost';
+const port = 8000;
+
+app.use(express.json());
+
+app.use('/stocks', stocks);
+
+app.listen(port, host, () => {
+    console.log(`Сервер запущен по адресу http://${host}:${port}`);
+});
+```
+
+Теперь наше API умеет читать акции, создавать, а также удалять их.
+
+## 7. ЗАДАНИЕ
+
+1. Необходимо в ваши проекты с 3-5 лабораторную работу добавить возможность добавления и удаления карточек.
+2. Удалить все `getData()` и заменить их на походы в написанное вами API.
+3. Написать бэкенд на Node.js на примере данного, который будет возвращать данные (которые раньше лежали в `getData`) для вашего приложения. 
+
+## 8. ДОП. ЗАДАНИЕ
+
+Для сильных ребят предоставляется возможность реализовать свой BFF. 
+Т.е. перенести логику работы с VK API на бэкенд, который будет как бы прослойкой между клиентским приложением и VK API.
+Чтобы правильно это сделать, напишите в телеграм @nathan_kith. Я подскажу, как это лучше сделать и дам рекомендации.
+
+Что вы за это получите? ~~Полезный опыт~~
+Возможность попасть на стажировку в Яндекс. Пишите в телеграм (nathan_kith)!
