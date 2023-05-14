@@ -40,9 +40,13 @@ Event Loop, промисы, async/await, fetch
 
 Node.js. Бэкенд на JavaScript
 
+* [Презентация](/lectures/lec6.pdf)
+
 ### Лекция 7. Web реального времени
 
-HTTP/2, Polling, WebSocket
+Полифиллы, Транспайлинг, Постпроцессоры, Бандлеры, TypeScript, Polling, WebSocket, Nginx
+
+* [Презентация](/lectures/lec7.pdf)
 
 ## Задания
 
