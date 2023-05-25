@@ -48,6 +48,12 @@ Node.js. Бэкенд на JavaScript
 
 * [Презентация](/lectures/lec7.pdf)
 
+### Лекция 8. Современный фронтенд-разработчик
+
+Service Workers, PWA, Virtual DOM, Deploy, Производительность
+
+* [Презентация](/lectures/lec8.pdf)
+
 ## Задания
 
 ### Модуль 1
