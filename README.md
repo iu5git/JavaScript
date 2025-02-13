@@ -56,6 +56,9 @@ Service Workers, PWA, Virtual DOM, Deploy, Производительность
 
 ## Задания
 
+* [Установка](/tutorials/install/README.md) `Python`, `NodeJS`, `Git`, `Docker` на Windows, MacOS, Linux
+* [Основные команды git и описание Docker Compose](/tutorials/git-docker/). 
+
 ### Модуль 1
 
 #### Лабораторная работа 1
@@ -86,7 +89,7 @@ Service Workers, PWA, Virtual DOM, Deploy, Производительность
 
 ### Модуль 2
 
-#### Лабораторная работа 6
+#### Лабораторная работа 4
 
 Реализация собственного API на Node.js, подключение к интерфейсу.
 
