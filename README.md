@@ -56,8 +56,8 @@ Service Workers, PWA, Virtual DOM, Deploy, Производительность
 
 ## Задания
 
-* [Установка](/tutorials/install/README.md) `Python`, `NodeJS`, `Git`, `Docker` на Windows, MacOS, Linux
-* [Основные команды git и описание Docker Compose](/tutorials/git-docker/). 
+* [Установка](https://github.com/iu5git/Web/blob/main/tutorials/install/README.md) `Python`, `NodeJS`, `Git`, `Docker` на Windows, MacOS, Linux
+* [Основные команды git и описание Docker Compose](https://github.com/iu5git/Web/blob/main/tutorials/git-docker/). 
 
 ### Модуль 1
 
