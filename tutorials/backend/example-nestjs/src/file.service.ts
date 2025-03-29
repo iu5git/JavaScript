@@ -8,7 +8,7 @@ export interface FileAccessor {
 
 @Injectable()
 export class FileService<I> {
-  private readonly filePath = path.resolve(__dirname);
+  protected readonly filePath = path.resolve(__dirname);
 
   constructor(filePath?: string) {
     if (filePath) {
