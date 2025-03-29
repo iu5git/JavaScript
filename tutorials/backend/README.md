@@ -690,6 +690,120 @@ app.listen(port, host, () => {
 
 Теперь наше API умеет читать акции, создавать, а также удалять их.
 
+## 5. Пишем API на NestJS
+
+NestJS - мощный фреймворк для создания серверных приложений на NodeJS с полной поддержкой TypeScript и готовой архитектурой из коробки. Также NestJS предоставляет DI систему, которая позволяет гибко конфигурировать провайдеры приложения.
+
+Начнем с установки CLI и создания нового приложения:
+
+
+```shell
+npm i -g @nestjs/cli
+nest new lab4 --strict
+```
+
+```shell
+✨  We will scaffold your app in a few seconds..
+
+✔ Which package manager would you ❤️  to use? npm
+CREATE lab4/.prettierrc (51 bytes)
+CREATE lab4/README.md (5020 bytes)
+CREATE lab4/eslint.config.mjs (856 bytes)
+CREATE lab4/nest-cli.json (171 bytes)
+CREATE lab4/package.json (2030 bytes)
+CREATE lab4/tsconfig.build.json (97 bytes)
+CREATE lab4/tsconfig.json (541 bytes)
+CREATE lab4/src/app.controller.ts (274 bytes)
+CREATE lab4/src/app.module.ts (249 bytes)
+CREATE lab4/src/app.service.ts (142 bytes)
+CREATE lab4/src/main.ts (228 bytes)
+CREATE lab4/src/app.controller.spec.ts (617 bytes)
+CREATE lab4/test/jest-e2e.json (183 bytes)
+CREATE lab4/test/app.e2e-spec.ts (674 bytes)
+
+✔ Installation in progress... ☕
+
+🚀  Successfully created project lab4
+
+```
+
+NestJS cli создаст скелет приложения. Запустим командой `npm run start` и посмотрим на результат `http://localhost:3000`:
+
+![Hello World!](hello-world.png)
+
+В данной лабораторной будет разработан сервис карточек, реализующий следующий REST API:
+
+-   GET /stocks/ - получение всех карточек
+-   POST /stocks - создание новой карточки
+-   GET /stocks/:id - получение карточки по ID
+-   PATCH /stocks/:id - обновление карточки по ID
+-   DELETE /stocks/:id - удаление карточки по ID
+
+Создадим сущности, необходимые для CRUD операциями над карточками `stocks`. Флаг `--no-spec` отключает генерацию тестовых файлов - в данной лабораторной они не понадобятся.
+
+```shell
+➜  lab4 git:(main) ✗ nest generate resource stocks --no-spec
+✔ What transport layer do you use? REST API
+✔ Would you like to generate CRUD entry points? Yes
+CREATE src/stocks/stocks.controller.ts (915 bytes)
+CREATE src/stocks/stocks.module.ts (255 bytes)
+CREATE src/stocks/stocks.service.ts (623 bytes)
+CREATE src/stocks/dto/create-stock.dto.ts (31 bytes)
+CREATE src/stocks/dto/update-stock.dto.ts (173 bytes)
+CREATE src/stocks/entities/stock.entity.ts (22 bytes)
+UPDATE package.json (2063 bytes)
+UPDATE src/app.module.ts (316 bytes)
+✔ Packages installed successfully.
+```
+
+При генерации нового CRUD источника автоматически создаются следующие абстракции:
+
+-   Module - группирующая сущность для объединения нескольких элементов, решающих общую задачу;
+-   Controller - контроллер эндпоинтов, отвечает за обработку пользовательских запросов и возвращение корректных результатов;
+-   Service - сервис, отвечающий за определенную логику взаимодействия;
+-   Entities - модели данных источника;
+-   Dto - "транспортные" сущности, отражающие состояние модели данных при передаче между архитектурными границами приложения
+
+После кодогенерации получаем такие файлы в папке `stocks`:
+
+`stocks.controller`:
+```ts
+@Controller('stocks')
+export class StocksController {
+    constructor(private readonly stocksService: StocksService) {}
+
+    @Post()
+    create(@Body() createStockDto: CreateStockDto) {
+        return this.stocksService.create(createStockDto);
+    }
+
+    @Get()
+    findAll() {
+        return this.stocksService.findAll();
+    }
+
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return this.stocksService.findOne(+id);
+    }
+
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() updateStockDto: UpdateStockDto) {
+        return this.stocksService.update(+id, updateStockDto);
+    }
+
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return this.stocksService.remove(+id);
+    }
+}
+```
+
+`stocks.module`:
+`stocks.service`:
+
+...
+
 ## 7. ЗАДАНИЕ
 
 1. Необходимо в ваши проекты с 3-5 лабораторную работу добавить возможность добавления и удаления карточек.
