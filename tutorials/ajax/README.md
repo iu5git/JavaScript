@@ -265,7 +265,7 @@ getHTML(data) {
 }
 ```
 
-## Задание
+## Дополнительные материалы
 
 Создать двухстраничное приложение из примера по вариантам.
 Вариант состоит из 2 методов и доп фильтра на эти методы.
@@ -313,13 +313,3 @@ getHTML(data) {
 ## Полезные ссылки
 
 1. Почитать про **XMLHttpRequest** [тут][xml]
-2. Почитать про **VK Api** [тут][vk-api]
-
-[vs-code]: https://code.visualstudio.com
-[vs-code-live-server]: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
-[node-install]: https://nodejs.org/en/download
-[xml]: https://learn.javascript.ru/xmlhttprequest
-[vk-api]: https://dev.vk.com/reference
-[vk-api-group-key]: https://dev.vk.com/api/access-token/getting-started#Ключ%20доступа%20сообщества
-[vk-api-create-group]: https://vk.com/groups?w=groups_create
-[cors-unblock]: https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino/related
