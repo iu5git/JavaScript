@@ -762,7 +762,7 @@ render() {
     backButton.render(this.clickBack.bind(this))
 
     const data = this.getData()
-    const stock = new ProductComponent(this.pageRoot)
+    const stock = new ProductCardComponent(this.pageRoot)
     stock.render(data)
 }
 ```
