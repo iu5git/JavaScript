@@ -1,31 +1,30 @@
-# Простое веб-приложение. Работа с Api
+# ЛР №5. Простое веб-приложение. Работа с API.
 
-**Цель** данной лабораторной работы - взаимодействие с внешним Api через XMLHttpRequest. В ходе выполнения работы, вам предстоит ознакомиться с кодом реализации простого взаимодействия с внешним Api, получение данных и вывод их в интерфейс пользователя, и затем выполнить задания по варианту.
+**Цель** данной лабораторной работы - взаимодействие с внешним API через XMLHttpRequest. В ходе выполнения работы, вам предстоит ознакомиться с кодом реализации простого взаимодействия с внешним API, получение данных и вывод их в интерфейс пользователя, и затем выполнить задания по варианту.
 
-## План
+## План лабораторной работы.
 
-1. Инструменты для работы
-2. Что такое XMLHttpRequest
-3. Работа с Api
-4. Api главной страницы
-5. Api страницы пользователя
+1. Инструменты для работы.
+2. Что такое XMLHttpRequest.
+3. Работа с API.
+4. API главной страницы с карточками.
+5. API страницы карточки.
+6. Задание.
 
-## 1. Инструменты для работы
+## 1. Инструменты для работы.
 
-Для работы будем использовать инструменты из предыдущих лабораторной работы: [VS Code][vs-code] + [Live Server][vs-code-live-server].
+Для работы будем использовать инструменты из предыдущих лабораторной работы: [VS Code](https://code.visualstudio.com/) + [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
 
-**Перед началом работы необходимо установить на свой компьютер [Node.js][node-install].**
+## 2. Что такое XMLHttpRequest.
 
-## 2. Что такое XMLHttpRequest
-
-[XMLHttpRequest][xml] (или XHR) позволяет делать HTTP-запросы к серверу из браузера без перезагрузки страницы.
+[XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) (или XHR) позволяет делать HTTP-запросы к серверу из браузера без перезагрузки страницы.
 Несмотря на наличие слова "XML" в названии, с помощью XHR можно работать с любыми типами данных, а не только с XML.
 С помощью XML можно загружать/скачивать файл, отслеживать прогрусс и многое другое.
 
-## 3. Работа с Api
+## 3. Работа с API.
 
-Перед началом работы с Api разберемся с тем, как мы это будем делать в нашем проекте.
-Первое с чего стоит начать - создадим еще один слой, где будем держать все методы работы с Api.
+Перед началом работы с API разберемся с тем, как мы это будем делать в нашем проекте.
+Первое с чего стоит начать - создадим еще один слой, где будем держать все методы работы с API.
 
 Сейчас структура проекта выглядит так
 
@@ -46,79 +45,148 @@
 ├── main.js
 ```
 
-### Работа с константами
+### 3.1. Работа с урлами.
 
-При работе нам понадобяться константы, чтобы не разрбрасывать их по всему проекты создадим отдельный файл под константы.
+Для работы нам понадобятся эндпоинты API, разработанные в предыдущей ЛР. Запустим сервер с помощью `npm run start` и убедимся, что он заработал и готов слушать запросы. Сервер запустится и будет доступен по адресу `http://localhost:3000`.
 
-* Создаем файл `modules/consts.js`
+![Start server](assets/start-server.png)
 
-```js
-export const groupId = GROUP_ID
-export const accessToken = 'ACCESS_TOKEN'
-export const version = '5.131'
-```
+Объявим нужные эндпоинты для карточек в отдельном файле, чтобы можно было переиспользовать в нескольких местах сразу и в случае чего, поменять базовый URL.
 
-Описание полей:
+Базовый URL - `http://localhost:3000`, каждый запрос будет за карточками выполняться по `/stocks`.
 
-* groupId - id группы, которую мы создали
-* accessToken - секретный ключ нашей группы
-* version - версия VK Api
-
-Теперь, если нам нужно где-то получить константы, то мы просто импортируем файл и получаем наши константы.
-
-### Работа с урлами
-
-Для работы нам понадобятся урлы вк, чтобы их не объявлять сразу в коде, то сделаем отдельный файл для этого.
-
-* Создаем файл `modules/urls.js`
+-   Создаем файл `modules/stockUrls.js`
 
 ```js
-import {accessToken, version} from "./consts.js";
-
-class Urls {
+class StockUrls {
     constructor() {
-        this.url = 'https://api.vk.com/method'
-        this.commonInfo = `access_token=${accessToken}&v=${version}`
+        this.baseUrl = 'http://localhost:3000';
     }
 
-    getUserInfo(userId) {
-        return `${this.url}/users.get?user_ids=${userId}&fields=photo_400_orig&${this.commonInfo}`
+    getStocks() {
+        return `${this.baseUrl}/stocks`;
     }
 
-    getGroupMembers(groupId) {
-        return `${this.url}/groups.getMembers?group_id=${groupId}&fields=photo_400_orig&${this.commonInfo}`
+    getStockById(id) {
+        return `${this.baseUrl}/stocks/${id}`;
+    }
+
+    createStock() {
+        return `${this.baseUrl}/stocks`;
+    }
+
+    removeStockById() {
+        return `${this.baseUrl}/stocks/${id}`;
+    }
+
+    updateStockById() {
+        return `${this.baseUrl}/stocks/${id}`;
     }
 }
 
-export const urls = new Urls()
+export const stockUrls = new StockUrls();
 ```
 
 Теперь, если нам нужно получить урл, то просто импортируем файл и получаем нужный нам урл.
 
 ```js
-import {urls} from "./urls.js";
+import { stockUrls } from './stockUrls.js';
 
-urls.getGroupMembers()
+stockUrls.getStocks();
 ```
 
-### Работа с Api
+### 3.2. Работа с API.
 
-Мы будем работать с VK Api через XHR. Для удобства создадим класс, в котом опишем методы для работы с Api.
+Мы будем работать с API через XHR. Для удобства создадим класс, в котором опишем методы для работы с API.
 
-* Создаем файл `modules/ajax.js`
+-   Создаем файл `modules/ajax.js`
 
 ```js
 class Ajax {
-    post(url, callback) {
-        let xhr = new XMLHttpRequest()
-        xhr.open('POST', getUrl(url))
-        xhr.send()
+    /**
+     * GET запрос
+     * @param {string} url - Адрес запроса
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    get(url, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.send();
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
-                const data = JSON.parse(xhr.response)
-                callback(data)
+                this._handleResponse(xhr, callback);
             }
+        };
+    }
+
+    /**
+     * POST запрос
+     * @param {string} url - Адрес запроса
+     * @param {object} data - Данные для отправки
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    post(url, data, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                this._handleResponse(xhr, callback);
+            }
+        };
+    }
+
+    /**
+     * PATCH запрос
+     * @param {string} url - Адрес запроса
+     * @param {object} data - Данные для обновления
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    patch(url, data, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PATCH', url);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                this._handleResponse(xhr, callback);
+            }
+        };
+    }
+
+    /**
+     * DELETE запрос
+     * @param {string} url - Адрес запроса
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    delete(url, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('DELETE', url);
+        xhr.send();
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                this._handleResponse(xhr, callback);
+            }
+        };
+    }
+
+    /**
+     * Обработчик ответа (приватный метод)
+     * @param {XMLHttpRequest} xhr - Объект запроса
+     * @param {function} callback - Функция обратного вызова
+     */
+    _handleResponse(xhr, callback) {
+        try {
+            const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+            callback(data, xhr.status);
+        } catch (e) {
+            console.error('Ошибка парсинга JSON:', e);
+            callback(null, xhr.status);
         }
     }
 }
@@ -126,39 +194,60 @@ class Ajax {
 export const ajax = new Ajax();
 ```
 
-У нас есть готовый класс, через который мы можем выполнить POST запрос. Тут уже происходит вся нужная обработка и формирование JSON объекта из данных и вызов колбека. Если нужно будет, то в будущем мы можем сюда добавить GET, PUT, DELETE запросы.
+У нас есть готовый класс, через который мы можем выполнять запросы. Тут уже происходит вся нужная обработка и формирование JSON объекта из данных и вызов коллбека.
 
 ```js
-import {ajax} from "./ajax.js";
+import { ajax } from './ajax.js';
 
-ajax.post()
+// GET пример
+api.get('https://api.example.com/data', (data, status) => {
+    console.log(status, data);
+});
+
+// POST пример
+api.post('https://api.example.com/create', { name: 'John' }, (data, status) => {
+    console.log(status, data);
+});
+
+// PATCH пример
+api.patch(
+    'https://api.example.com/update/1',
+    { name: 'Updated' },
+    (data, status) => {
+        console.log(status, data);
+    }
+);
+
+// DELETE пример
+api.delete('https://api.example.com/delete/1', (data, status) => {
+    console.log(status, data);
+});
 ```
 
-## 4. Api главной страницы
+## 4. API главной страницы с карточками.
 
-Переведем нашу главную страницу на работу с Api.
-Сделаем так, чтобы на главной странице выводились пользователи нашей группы.
+Переведем нашу главную страницу на работу с API.
+Сделаем так, чтобы на главной странице выводились карточки, полученные по API.
 
 Первое с чего нужно начать - модифицировать получение данных.
 Сейчас мы рисуем карточки на основе объекта в коде.
-Нам нужно поменять на получение данных из Api и отрисовку карточек.
+Нам нужно поменять на получение данных из API и отрисовку карточек.
 
-* Изменяем функцию получения данных
+-   Изменяем функцию получения данных
 
 ```js
 import {ajax} from "../../modules/ajax.js";
-import {urls} from "../../modules/urls.js";
-import {groupId} from "../../modules/consts.js";
+import {stockUrls} from "../../modules/stockUrls.js";
 
 
 getData() {
-    ajax.post(urls.getGroupMembers(groupId), (data) => {
-        this.renderData(data.response.items)
+    ajax.get(stockUrls.getStocks(), (data) => {
+        this.renderData(data);
     })
 }
 ```
 
-* Добавляем функцию отрисовки карточек по данным
+-   Добавляем функцию отрисовки карточек по данным
 
 ```js
 renderData(items) {
@@ -169,7 +258,7 @@ renderData(items) {
 }
 ```
 
-* Модифицируем функцию отрисовки страницы
+-   Модифицируем функцию отрисовки страницы
 
 ```js
 render() {
@@ -181,53 +270,57 @@ render() {
 }
 ```
 
-Так же нужно поменять структуру компонента `ProductCardComponent` под новое Api.
-У нас теперь передаются новые поля, которые нужно учитывать.
-В нашем Api нет полей `src`, `title` и `text`, необходимо заменить их на те поля, что есть в нашем Api.
+---
 
-```js
-getHTML(data) {
-    return (
-        `
-            <div class="card" style="width: 300px;">
-                <img class="card-img-top" src="${data.photo_400_orig}" alt="картинка">
-                <div class="card-body">
-                    <h5 class="card-title">${data.first_name} ${data.last_name}</h5>
-                    <button class="btn btn-primary" id="click-card-${data.id}" data-id="${data.id}">Нажми на меня</button>
-                </div>
-            </div>
-        `
-    )
-}
-```
+Если вы все еще видите пустую страницу, то проверьте консоль разработчика - возможно, там будет ошибка:
+`Access to XMLHttpRequest at 'http://localhost:3000/stocks' from origin 'http://127.0.0.1:5501' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.`
 
-Теперь на главной странице у нас отображаются все пользователи нашей группы.
+![Cors error](assets/cors-error.png)
+
+При попытке выполнить XHR-запрос браузер может заблокировать запрос не с того же домена, на котором находится запрашиваемый ресурс. Такая политика ограничений называется [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS).
+
+Есть несколько способов обойти это:
+
+1. Сделать так, чтобы главная страница index.html располагалась на том же домене и порту, что и серверная часть приложения, к которой будут выполняться запросы.
+2. Настроить CORS заголовки на сервере, чтобы они принимали запросы с конкретных или произвольных доменов.
+3. Использовать расширение [CORS Unblock](https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino), которое позволить обойти ограничения. Принцип работы расширения таков: оно перехватывает запрос и подменяет заголовки, убеждая браузер, что ответ пришел с разрешенного источника. CORS Unblock полезен для разработки, но не стоит использовать его в продакшене, так как он обходит встроенную защиту браузера. Лучший вариант — правильно настроить CORS на сервере.
+
+Воспользуемся CORS Unblock, как самым быстрым и простым решением. После установки и включения расширения ошибка должна исчезнуть. Если этого не произошло, убедитесь, что все сделали правильно.
+
+---
+
+Теперь, на главной странице у нас отображаются все карточки, получаемые с бэкенда по API. Результаты запросов можно отследить в **DevTools** во вкладке **Network**.
+
+![Get stocks](assets/get-stocks.png)
+
+![Get stocks network](assets/get-stocks-network.png)
+
 Перейдем к модификации второй страницы.
 
-## 5. Api страницы пользователя
+## 5. API страницы карточки.
 
-Модифицируем страницу так, чтобы отображать данные пользователя, на которые нажали.
+Модифицируем страницу так, чтобы отображать данные карточки, на которую нажали.
 
-* Изменяем функцию получения данных
+-   Изменяем функцию получения данных
 
 ```js
  getData() {
-    ajax.post(urls.getUserInfo(this.id), (data) => {
-        this.renderData(data.response)
+    ajax.get(stockUrls.getStockById(this.id), (data) => {
+        this.renderData(data);
     })
 }
 ```
 
-* Добавляем функцию отрисовки карточек по данным
+-   Добавляем функцию отрисовки карточек по данным
 
 ```js
 renderData(item) {
-    const product = new ProductComponent(this.pageRoot)
-    product.render(item[0])
+    const product = new ProductCardComponent(this.pageRoot)
+    product.render(item)
 }
 ```
 
-* Модифицируем функцию отрисовки страницы
+-   Модифицируем функцию отрисовки страницы
 
 ```js
 render() {
@@ -237,79 +330,44 @@ render() {
 
     const backButton = new BackButtonComponent(this.pageRoot)
     backButton.render(this.clickBack.bind(this))
-    
+
     this.getData()
 }
 ```
 
-Нам нужно поменять структуру компонента `ProductComponent`, так же как мы сделалил с компонентом `ProductCardComponent`
+Теперь при переходе на страницу какой-то карточки ее данные будут приходить через API по сети. Убедимся в этом, посмотрев вкладку **Network**:
 
-```js
-getHTML(data) {
-    return (
-        `
-            <div class="card mb-3" style="width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="${data.photo_400_orig}" class="img-fluid" alt="картинка">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">${data.first_name} ${data.last_name}</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `
-    )
-}
-```
+![Get stock by id](assets/get-stock-by-id.png)
 
-## Дополнительные материалы
+## Задание.
 
 Создать двухстраничное приложение из примера по вариантам.
-Вариант состоит из 2 методов и доп фильтра на эти методы.
+Вариант состоит из методов и доп. фильтров на эти методы.
 
-Варианты:
+### Варианты:
 
-### 1 вариант
+#### 1 вариант.
 
-Главная страница - [groups.getMembers](https://dev.vk.com/method/groups.getMembers).
-Получаем список пользователей группы и отображаем их.
-Необходимо сделать компонент для фильтра `sort` (см. groups.getMembers -> Параметры -> sort).
+1. Главная страница - получаем и отображаем список карточек
+   Необходимо сделать компонент для фильтрации карточек по названию (title) с помощью передачи query-параметра в GET-запрос.
 
-Вторая страница - [users.get](https://dev.vk.com/method/users.get).
-Отображаем выбранного пользователя на первой странице.
+2. Вторая страница - отображение конкретной карточки по ID. Добавить кнопку удаления карточки и выполнять удаление при клике на нее через DELETE-запрос к API.
 
-### 2 вариант
+#### 2 вариант.
 
-Главная страница - [groups.getMembers](https://dev.vk.com/method/groups.getMembers).
-Получаем список пользователей группы и отображаем их.
-Необходимо сделать компонент для фильтра `filter` (см. groups.getMembers -> Параметры -> filter).
+1. Главная страница - получаем и отображаем список карточек.
 
-Вторая страница - [users.get](https://dev.vk.com/method/users.get).
-Отображаем выбранного пользователя на первой странице.
+2. Вторая страница - добавить страницу с формой создания карточки и выполнять ее создание через POST-запрос.
 
-### 3 вариант
+#### 3 вариант.
 
-Главная страница - [messages.getConversationMembers](https://dev.vk.com/method/messages.getConversationMembers).
-Получаем список участников беседы и отображаем их.
-У группы можно создать чат.
-Необходимо сделать несколько чатов у группы и добавить компонент для выбора `peer_id` (см. messages.getConversationMembers -> Параметры -> peer_id).
+1. Главная страница - получаем и отображаем список карточек.
 
-Вторая страница - [users.get](https://dev.vk.com/method/users.get).
-Отображаем выбранного пользователя на первой странице.
+2. Вторая страница - отображение конкретной карточки по ID. Добавить поля для обновления карточки и обновлять их с помощью PATCH-запроса.
 
-### 4 вариант
+#### 4 вариант.
 
-Главная страница - [messages.getConversations](https://dev.vk.com/method/messages.getConversations).
-Получаем список чатов и отображаем их.
-У группы можно создать несколько чатов.
-Необходимо сделать компонент для фильтра `filter` (см. messages.getConversations -> Параметры -> filter).
+1. Главная страница - получаем и отображаем список карточек.
+   Необходимо сделать компонент для фильтрации карточек по названию (title) с помощью передачи query-параметра в GET-запрос.
 
-Вторая страница - [messages.getConversationsById](https://dev.vk.com/method/messages.getConversationsById).
-Отображаем выбранный чат на первой странице.
-
-## Полезные ссылки
-
-1. Почитать про **XMLHttpRequest** [тут][xml]
+2. Добавить поле для ввода числа, которое будет ограничивать максимальное количество карточек, отображаемых на странице - простенькая пагинация на клиенсткой части. При изменении этого числа, количество карточек должно меняться.
