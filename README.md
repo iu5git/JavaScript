@@ -85,6 +85,7 @@ Event Loop, промисы, async/await, fetch
 - **Порядок показа**: объяснить реализацию требуемых функций
 
 * [Методические указания](/tutorials/hw1/README.md)
+* [Пример работы с three.js](/tutorials/threejs/README.md)
 
 #### Рубежный контроль 1
 

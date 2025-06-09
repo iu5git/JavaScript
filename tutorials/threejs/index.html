@@ -1,0 +1,26 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>3D Модели — Галерея</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Галерея 3D моделей</h1>
+    <input type="file" id="uploadModel" accept=".glb,.gltf" multiple style="margin-top:12px">
+  </header>
+  <main id="card-list"></main>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/examples/jsm/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="idb.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
