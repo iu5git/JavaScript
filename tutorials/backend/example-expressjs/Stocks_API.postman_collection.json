@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "express-stocks-api",
+		"name": "Express Stocks API",
+		"description": "Коллекция для тестирования REST API карточек Stock на Express.js",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Получить все карточки",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stocks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks"
+					]
+				},
+				"description": "Получение всех карточек Stock из базы данных"
+			},
+			"response": []
+		},
+		{
+			"name": "2. Поиск карточек по названию",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stocks?title=Акция 1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Акция 1",
+							"description": "Поиск по названию (регистронезависимый)"
+						}
+					]
+				},
+				"description": "Поиск карточек по части названия (регистронезависимый поиск)"
+			},
+			"response": []
+		},
+		{
+			"name": "3. Получить карточку по ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stocks/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks",
+						"1"
+					]
+				},
+				"description": "Получение конкретной карточки по ID"
+			},
+			"response": []
+		},
+		{
+			"name": "4. Создать новую карточку",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"src\": \"https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg\",\n  \"title\": \"Новая акция\",\n  \"text\": \"Описание новой акции\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/stocks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks"
+					]
+				},
+				"description": "Создание новой карточки Stock. ID генерируется автоматически."
+			},
+			"response": []
+		},
+		{
+			"name": "5. Обновить карточку",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Обновленное название\",\n  \"text\": \"Обновленное описание\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/stocks/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks",
+						"2"
+					]
+				},
+				"description": "Частичное обновление карточки. Можно передать только те поля, которые нужно изменить."
+			},
+			"response": []
+		},
+		{
+			"name": "6. Удалить карточку",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stocks/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks",
+						"4"
+					]
+				},
+				"description": "Удаление карточки по ID. Возвращает статус 204 No Content при успехе."
+			},
+			"response": []
+		},
+		{
+			"name": "7. Тест 404 - Несуществующая карточка",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stocks/999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks",
+						"999"
+					]
+				},
+				"description": "Проверка обработки ошибки 404 при запросе несуществующей карточки"
+			},
+			"response": []
+		},
+		{
+			"name": "8. Тест 400 - Невалидные данные",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Только название\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/stocks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stocks"
+					]
+				},
+				"description": "Проверка валидации - создание карточки с неполными данными должно вернуть 400 Bad Request"
+			},
+			"response": []
+		},
+		{
+			"name": "9. Тест 404 - Несуществующий маршрут",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/nonexistent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"nonexistent"
+					]
+				},
+				"description": "Проверка глобальной обработки 404 для несуществующих маршрутов"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
