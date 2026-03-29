@@ -68,7 +68,7 @@ app.get('/hello', (req, res) => {
 | **Параметры URL**    | Ручной парсинг параметров пути и query-string | Автоматически в `req.params`                            |
 | **Отправка JSON**    | `res.setHeader` + `res.end(JSON.stringify())` | `res.json()`                                            |
 | **Обработка тела**   | Ручное чтение потока (Stream)                 | Готовые middleware (`express.json()`)                   |
-| **Обработка ошибок** | Ручная обработка через `try-catch`            | Готовые middleware для синхронных и асинхронных ошиброк |
+| **Обработка ошибок** | Ручная обработка через `try-catch`            | Готовые middleware для синхронных и асинхронных ошибок |
 
 ### Express.js vs NestJS
 
