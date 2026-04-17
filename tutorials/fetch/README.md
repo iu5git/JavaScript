@@ -129,7 +129,7 @@ const promise = new Promise((resolve, reject) => {
 ```ts
 promise
     .then(() => {console.log('Победа')}) // сюда попадаем в случае успеха
-    .catch(() => {console.log('ПРоизошла ошибка')}) // сюда в случае ошибки
+    .catch(() => {console.log('Произошла ошибка')}) // сюда в случае ошибки
     .finally(() => {console.log('Закончили')}) // сюда всегда попадаем в конце
 ```
 
